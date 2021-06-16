@@ -41,10 +41,13 @@ Use the higher-order function called getYears to do the following:
 2. Receive a callback function getFinals from task 2 
 3. Return an array called years containing all of the years in the getFinals data set*/
 
-function getYears(array,getFinalsCB) {
-    // let years [];
-    return 
+function getYears(data, getFinalsCB) {
+    const years = getFinalsCB(data).map(function(item) {
+        return item.Year;
+    });
+    return years;
 }
+console.log(['task 3:', getYears(fifaData, getFinals)]);
 
 
 
@@ -55,10 +58,20 @@ Use the higher-order function getWinners to do the following:
 3. Determines the winner (home or away) of each `finals` game. 
 4. Returns the names of all winning countries in an array called `winners` */ 
 
-function getWinners(array,getFinalsCB) {
-    /* code here  dica: splice win conditions*/
+function getWinners(data, getFinalsCB) {
+    const winners = getFinalsCB(data).map(function(item) {
+        let home = item["Home Team Goals"];
+        let away = item["Away Team Goals"];
+        if (home>away) {
+            return item["Home Team Name"];
+        } else if (home<away) {
+            return item["Away Team Name"];
+        }
+        return item['Win conditions'].split(" ")[0];
+    });
+    return winners;
 }
-
+console.log(['task 4:', getWinners(fifaData, getFinals)]);
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 5: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 
@@ -71,10 +84,16 @@ Use the higher-order function getWinnersByYear to do the following:
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
+function getWinnersByYear(data, getYearsCB, getWinnersCB) {
+    const years = getYearsCB(data, getFinals);
+    const winners = getWinnersCB(data, getFinals);
+    const result = [];
+    for (let i=0; i<years.length; i++) {
+        result.push(`In ${years[i]}, ${winners[i]} won the world cup!`);
+    }
+    return result;
 }
-
+console.log(['task 5:', getWinnersByYear(fifaData, getYears, getWinners)]);
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
