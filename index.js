@@ -105,12 +105,15 @@ Use the higher order function getAverageGoals to do the following:
  
  Example of invocation: getAverageGoals(getFinals(fifaData));
 */
-
-function getAverageGoals(/* code here */) {
-   /* code here */
+function getAverageGoals(getFinalsCB) {
+    const averageGoals = getFinalsCB.reduce(function(acc, item){
+        let avg = item["Home Team Goals"] + item["Away Team Goals"];
+        return acc + avg;
+    },0);
+    return (averageGoals/getFinalsCB.length).toFixed(2);
 }
 
-
+console.log(['task 5:', getAverageGoals(getFinals(fifaData))]);
 
 
 /// 🥅 STRETCH 🥅 ///
@@ -147,7 +150,12 @@ function badDefense(/* code here */) {
     /* code here */
 
 }
+num = num1 +num2
 
+function sum(num1,num2){
+    return num1+num2;
+}
+console.log(sum);
 
 /* If you still have time, use the space below to work on any stretch goals of your chosing as listed in the README file. */
 
